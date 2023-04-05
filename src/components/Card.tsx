@@ -50,6 +50,7 @@ const ButtonDelete = styled.button`
   border-width: 0;
   background: #e5714c;
   border-radius: 4px;
+  cursor: pointer;
 `;
 const Error = styled.div`
   color: red;
@@ -64,8 +65,13 @@ const Field = styled.input<{ fontWeight: number; fontSize: string }>`
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.color || "black"};
   width: 100px;
-  border: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
   outline: none;
+  transition: border-color 200ms ease-in-out;
+  &:focus {
+    border: 1px solid grey;
+  }
 `;
 const Card: FC<CardType> = ({
   id,
@@ -115,7 +121,6 @@ const Card: FC<CardType> = ({
           </p>
         </div>
       </CardField>
-      <CardField></CardField>
       <ColorBlockWrapper>
         <ColorBlock color={color}></ColorBlock>
       </ColorBlockWrapper>

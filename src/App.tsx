@@ -43,6 +43,7 @@ const SortButton = styled.div`
   background: #3563e9;
   border-radius: 4px;
   margin-left: 10px;
+  cursor: pointer;
 `;
 const App = () => {
   const [data, setData] = useState<CardType[]>([]);
