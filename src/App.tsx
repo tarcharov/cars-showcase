@@ -5,15 +5,44 @@ import { fetchData } from "./utils/fetchData";
 import styled from "styled-components";
 
 const Main = styled.div`
+  width: 1280px;
+  margin: 0 auto;
+  font-family: "Plus Jakarta Sans";
+`;
+
+const ToolBar = styled.div`
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 25px;
+`;
+
+const MainCard = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
 `;
-const CardWrapper = styled.div`
-  display: block;
+
+const ButtonWrapper = styled.div`
+  display: flex;
   margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
+`;
+
+const SortButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 120px;
+  height: 40px;
+  background: #3563e9;
+  border-radius: 4px;
+  margin-left: 10px;
 `;
 const App = () => {
   const [data, setData] = useState<CardType[]>([]);
@@ -32,11 +61,7 @@ const App = () => {
     setData((prev) => prev.filter((item) => item.id !== itemId));
   };
 
-  const onChangeClick = (
-    id: number,
-    text: string | null,
-    field: keyof CardType
-  ) => {
+  const onChangeClick = (id: number, text: string, field: keyof CardType) => {
     setData(
       data.map((item) => {
         if (item.id === id) return { ...item, [field]: text };
@@ -46,26 +71,34 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div>
-        <button onClick={() => sortByAtr("year")}>Sort by year</button>
-        <button onClick={() => sortByAtr("price")}>Sort by price</button>
-      </div>
-      <Main>
+    <Main>
+      <ToolBar>
+        <div>
+          <span>Card List</span>
+        </div>
+        <ButtonWrapper>
+          <SortButton onClick={() => sortByAtr("year")}>
+            Sort by year
+          </SortButton>
+          <SortButton onClick={() => sortByAtr("price")}>
+            Sort by price
+          </SortButton>
+        </ButtonWrapper>
+      </ToolBar>
+      <MainCard>
         {data.length > 0
           ? data.map((item) => (
-              <CardWrapper>
-                <Card
-                  key={item.id}
-                  {...item}
-                  onDeleteClick={() => onClickDelete(item.id)}
-                  onChangeClick={onChangeClick}
-                />
-              </CardWrapper>
+              <Card
+                key={item.id}
+                {...item}
+                onDeleteClick={() => onClickDelete(item.id)}
+                onChangeClick={onChangeClick}
+              />
             ))
           : "Loading"}
-      </Main>
-    </div>
+      </MainCard>
+      <Footer>{data.length} Cars</Footer>
+    </Main>
   );
 };
 
